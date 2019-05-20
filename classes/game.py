@@ -1,4 +1,5 @@
 import random
+from classes.magic import Spell
 
 
 class bcolors:
@@ -6,7 +7,7 @@ class bcolors:
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
     WARNING = '\033[93m'
-    FALE = '\033[91m'
+    FAIL = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
@@ -27,38 +28,31 @@ class Person:
     def generate_damage(self):
         return random.randrange(self.atkl, self.atkh)
 
-    def generate_spell_damage(self, idx):
-        mgl = self.magic[idx]["dmg"] - 5
-        mgh = self.magic[idx]["dmg"] + 5
-        return random.randrange(mgl, mgh)
-
     def take_damage(self, dmg):
         self.hp -= dmg
         if self.hp < 0:
             self.hp = 0
         return self.hp
 
+    def heal(self, dmg):
+        self.hp += dmg
+        if self.hp > self.maxhp:
+            self.hp = self.maxhp
+
     def get_hp(self):
         return self.hp
 
-    def get_mp(self):
-        return self.mp
-
     def get_max_hp(self):
         return self.maxhp
+
+    def get_mp(self):
+        return self.mp
 
     def get_max_mp(self):
         return self.maxmp
 
     def reduce_mp(self, cost):
         self.mp -= cost
-        return
-
-    def get_spell(self, idx):
-        return self.magic[idx]["name"]
-
-    def get_spell_mp_cost(self, idx):
-        return self.magic[idx]["cost"]
 
     def choose_action(self):
         idx = 1
@@ -69,7 +63,7 @@ class Person:
 
     def choose_magic(self):
         idx = 1
-        print("Magic")
+        print(bcolors.OKBLUE + bcolors.BOLD + "Magic" + bcolors.ENDC)
         for spell in self.magic:
-            print(str(idx) + ":", spell["name"], "(cost:", str(spell["mp"]) + ")")
+            print(str(idx) + ":", spell.name, "(cost:", str(spell.cost) + ")")
             idx += 1
