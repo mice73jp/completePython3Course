@@ -79,8 +79,34 @@ class Person:
             print("        ", str(idx) + ".", item["item"].name, ":", item["item"].description, " (x:" + str(item["quantity"]) + ")")
             idx += 1
 
-    def get_status(self):
+    def get_enemy_stats(self):
+        hp_bar = ""
+        mp_bar = ""
+        hp_bar_ticks = (self.hp / self.maxhp) * 100 / 2
+        mp_bar_ticks = (self.mp / self.maxmp) * 100 / 10
 
+        while hp_bar_ticks > 0:
+            hp_bar += "█"
+            hp_bar_ticks -= 1
+
+        while len(hp_bar) < 50:
+            hp_bar += " "
+
+        while mp_bar_ticks > 0:
+            mp_bar += "█"
+            mp_bar_ticks -= 1
+
+        while len(mp_bar) < 10:
+            mp_bar += " "
+
+        print("                      =========================                ==========")
+        print(bcolors.BOLD + self.name + "     " +
+              current_hp + " |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + bcolors.BOLD +
+              "|      " +
+              current_mp + " |" + bcolors.OKBLUE + mp_bar + bcolors.ENDC + "|")
+
+    def get_stats(self):
+        # set status bar of hp and mp
         hp_bar = ""
         mp_bar = ""
         hp_bar_ticks = (self.hp / self.maxhp) * 100 / 4
@@ -100,6 +126,7 @@ class Person:
         while len(mp_bar) < 10:
             mp_bar += " "
 
+        # set status point of hp and mp
         hp_string = str(self.hp) + "/" + str(self.maxhp)
         current_hp = ""
 

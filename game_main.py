@@ -50,7 +50,7 @@ while running:
     print("NAME                  HP                                       MP")
 
     for player in players:
-        player.get_status()
+        player.get_stats()
     print("\n")
 
     for player in players:
