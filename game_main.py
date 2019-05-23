@@ -72,7 +72,12 @@ while running:
             enemy = player.choose_target(enemies)
 
             enemies[enemy].take_damage(dmg)
-            print("You attacked " + enemies[enemy].name + " for", dmg, "points of damage.")
+            print("You attacked " + enemies[enemy].name.replace(" ", "") + " for", dmg, "points of damage.")
+
+            if enemies[enemy].get_hp() == 0:
+                print(enemies[enemy].name.replace(" ", "") + " has been died")
+                del enemies[enemy]
+
         elif index == 1:
             player.choose_magic()
             magic_choice = int(input("    Choose magic:")) - 1
@@ -99,6 +104,11 @@ while running:
                 enemies[enemy].take_damage(magic_dmg)
 
                 print(bcolors.OKBLUE + "\n" + spell.name + " deals", str(magic_dmg), "points of damage to" + enemies[enemy].name +  bcolors.ENDC)
+
+                if enemies[enemy].get_hp() == 0:
+                    print(enemies[enemy].name.replace(" ", "") + " has been died")
+                    del enemies[enemy]
+
         elif index == 2:
             player.choose_item()
             item_choice = int(input("    Choose item:")) - 1
@@ -125,7 +135,11 @@ while running:
 
                 enemies[enemy].take_damage(item.prop)
 
-                print(bcolors.FAIL + "\n" + item.name + " deals", str(item.prop), "points of damage to " + enemies[enemy].name + bcolors.ENDC)
+                print(bcolors.FAIL + "\n" + item.name + " deals", str(item.prop), "points of damage to " + enemies[enemy].name.replace(" ", "") + bcolors.ENDC)
+
+                if enemies[enemy].get_hp() == 0:
+                    print(enemies[enemy].name.replace(" ", "") + " has been died")
+                    del enemies[enemy]
 
     enemy_choice = 1
     target = random.randrange(0, 2)
